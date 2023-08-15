@@ -1,20 +1,18 @@
 import React, { useState } from 'react'
-import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from '../../utils/firebase';
+import {signInWithGooglePopup,createUserDocumentFromAuth, signInAuthUserWithEmailAndPassword } from '../../utils/firebase';
 import FormInput from '../form-input/FormInput';
 import Button from '../button/Button';
-import './Signup.styles.scss';
+import './SignInForm.styles.scss';
 
-const SignUp = () => {
+const SignInForm = () => {
 
     const defaultFormFields = {
-        'displayName' : '',
         'email' : '',
         'password' : '',
-        'confirmPassword' : ''
     };
 
     const [formFields ,  setFormFields] = useState(defaultFormFields);
-    const {displayName, email, password, confirmPassword} = formFields;
+    const { email, password} = formFields;
 
     const handleChange = (event)=>{
      const{name, value} = event.target;
@@ -25,18 +23,12 @@ const SignUp = () => {
 
     const handleSubmit = async(event)=>{
       event.preventDefault();
-      if(password !== confirmPassword)
-         {
-            alert("passwords don't match");
-            return;
-         }
          try {
-            const {user} =  await createAuthUserWithEmailAndPassword(email, password);
-            user.displayName = displayName;
-            const userDocRef = await createUserDocumentFromAuth(user);
+            const {user} = await signInAuthUserWithEmailAndPassword(email, password);
+            console.log(user)
             resetForm();
          } catch (error) {
-              switch(error.code){
+            switch(error.code){
                 case "auth/wrong-password":
                     alert("Incorrect Password");
                     break;
@@ -46,21 +38,22 @@ const SignUp = () => {
                 default:
                     console.log(error);
             }
+            
          }
         
       
     }
+const signInWithGoogle = async()=>{
+    const {user} =  await signInWithGooglePopup();
+    console.log(user);
+    await createUserDocumentFromAuth(user);
+}
+
   return (
-    <div className='sign-up-container'>
-        <h2>Don't have an account yet?</h2>
-        <span>Sign up with your email and password</span>
+    <div className='sign-in-container'>
+        <h2>Already Have an account?</h2>
+        <span>Sign In with your email and password</span>
         <form onSubmit={handleSubmit} >
-            <FormInput 
-            label="Display Name"
-            type="text" 
-            required id='name' name='displayName' 
-            value={displayName} onChange={handleChange}
-            />
              <FormInput 
             label="Email"
             type="email" 
@@ -73,16 +66,13 @@ const SignUp = () => {
             required id='password' name='password' 
             value={password} onChange={handleChange}
             />
-             <FormInput 
-            label="Confirm Password"
-            type="password" 
-            required id='password' name='confirmPassword' 
-            value={confirmPassword} onChange={handleChange}
-            />
-            <Button button_type="google" type="submit">Sign Up</Button>
+            <div className='buttons-container'>
+                <Button type="submit">Sign In</Button>
+                <Button type="button" button_type="google" onClick={signInWithGoogle}> Google Sign In</Button>
+            </div>
         </form>
     </div>
   )
 }
 
-export default SignUp
+export default SignInForm
