@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from '../../utils/firebase';
 import FormInput from '../form-input/FormInput';
 import Button from '../button/Button';
@@ -15,6 +15,7 @@ const SignUp = () => {
 
     const [formFields ,  setFormFields] = useState(defaultFormFields);
     const {displayName, email, password, confirmPassword} = formFields;
+  
 
     const handleChange = (event)=>{
      const{name, value} = event.target;

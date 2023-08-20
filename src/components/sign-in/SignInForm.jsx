@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import {signInWithGooglePopup,createUserDocumentFromAuth, signInAuthUserWithEmailAndPassword } from '../../utils/firebase';
 import FormInput from '../form-input/FormInput';
 import Button from '../button/Button';
@@ -25,7 +25,6 @@ const SignInForm = () => {
       event.preventDefault();
          try {
             const {user} = await signInAuthUserWithEmailAndPassword(email, password);
-            console.log(user)
             resetForm();
          } catch (error) {
             switch(error.code){
@@ -44,9 +43,7 @@ const SignInForm = () => {
       
     }
 const signInWithGoogle = async()=>{
-    const {user} =  await signInWithGooglePopup();
-    console.log(user);
-    await createUserDocumentFromAuth(user);
+    await signInWithGooglePopup();
 }
 
   return (
