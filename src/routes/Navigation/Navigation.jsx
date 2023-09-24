@@ -4,11 +4,13 @@ import "./Navigation.styles.scss"
 import CartIcon from '../../components/cart-icon/Cart-Icon'
 import { ReactComponent as Logo } from '../../assests/crown.svg'
 import { UserContext } from '../../context/userContext'
+import { CartContext } from '../../context/cartContext'
 import { signOutAuth } from '../../utils/firebase';
 import CartDropdown from '../../components/cart-dropdown/CartDropdown'
 
 const Navigation = ()=>{
   const { currentUser} = useContext(UserContext);
+  const{isCartOpen} = useContext(CartContext);
   
   const signOutHandler = async()=>{
     await signOutAuth();
@@ -34,7 +36,7 @@ const Navigation = ()=>{
                 }
                 <CartIcon/>
             </div>
-            <CartDropdown/>
+            {isCartOpen && <CartDropdown/>}
         </div>
         <Outlet/>
       </>
