@@ -3,7 +3,7 @@ import { getRedirectResult } from 'firebase/auth';
 import SignUp from '../sign-up/SignUp';
 import SignInForm from '../sign-in/SignInForm';
 import {auth } from '../../utils/firebase';
-import "./Authentication.styles.scss";
+import {AuthenticationContainer} from "./Authentication.styles.jsx";
 
 const Authentication = () => {
     useEffect(()=>{
@@ -13,10 +13,10 @@ const Authentication = () => {
        restoreAuth();
     },[])
   return (
-    <div className='authentication-container'>
+    <AuthenticationContainer>
         <SignInForm/>
         <SignUp/>
-    </div>
+    </AuthenticationContainer>
   )
 }
 
