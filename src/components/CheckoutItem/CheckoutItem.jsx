@@ -1,5 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react'
-import { CartContext } from '../../context/cartContext';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectCartItems } from '../../store/cart/cart.selector';
+import { updateCart , removeItemFromCart } from '../../store/cart/cart.action';
 import {
     CheckoutItemContainer,
     ImageContainer,
@@ -14,9 +16,10 @@ const CheckoutItem = ({cartItem}) => {
 
     const [product, setProduct] = useState(cartItem);
     let{name, quantity, price, imageUrl} = product;
-    const {updateCart, removeItemFromCart} = useContext(CartContext);
-    const UpdateCartItem = ()=>updateCart(product);
-    const RemoveCartItem = ()=>removeItemFromCart(product);
+    const dispatch = useDispatch();
+    const cartItems = useSelector(selectCartItems);
+    const UpdateCartItem = ()=>dispatch( updateCart (cartItems,product));
+    const RemoveCartItem = ()=>dispatch(removeItemFromCart(cartItems,product));
 
     const increment = ()=>{
         quantity =quantity + 1;
