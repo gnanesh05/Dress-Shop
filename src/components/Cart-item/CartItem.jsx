@@ -2,7 +2,6 @@ import React from 'react'
 import { CartItemContainer, ItemDetails } from './cart-item.styles';
 
 const CartItem = ({item}) => {
-  console.log(item)
   const{name, imageUrl,price,quantity} = item;
   return (
     <CartItemContainer>
