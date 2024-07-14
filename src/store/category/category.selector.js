@@ -27,6 +27,10 @@ export const getCategories = createSelector(
     },{})}
 )
 
+export const getCategoriesIsLoading = createSelector(
+    [selectCategoryReducer],
+    (categoriesSlice)=>categoriesSlice.isLoading
+);
 
 // export const getCategories = (state)=>state.categories.categories.reduce((acc, category)=>{
 //     const {title , items} = category;
