@@ -45,6 +45,7 @@ export const addCollectionAndDocuments = async(collectionKey,objectsToAdd)=>{
 }
 
 export const getCategoriesAndDocuments = async()=>{
+    console.log('catgores ftch')
     const collectionRef = collection(db,'categories');
     const q = query(collectionRef);
 

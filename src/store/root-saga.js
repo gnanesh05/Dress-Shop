@@ -3,5 +3,5 @@ import { categoriesSaga } from './category/category.saga'
 import { userSaga } from './user/user.saga'
 
 export function* rootSaga(){
-    yield all([call(categoriesSaga), call(userSaga)]);
+    yield all([call(userSaga),call(categoriesSaga)]);
 }

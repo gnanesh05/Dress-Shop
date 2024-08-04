@@ -44,7 +44,6 @@ export function* signInWithEmail({payload:{email, password}}){
 }
 
 export function* signInAfterSignUp({payload:{user, additionalDetails}}){
-    console.log('signinafter')
     yield call(getSnapShotFromUserAuth, user, additionalDetails);
 }
 
